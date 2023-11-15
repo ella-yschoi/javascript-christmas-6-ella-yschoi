@@ -1,6 +1,6 @@
-import { UTILS } from './constants.js';
+import { REGEX } from './constants.js';
 
-const isNumeric = (input) => UTILS.positive_integer.test(input);
+const isNumeric = (input) => REGEX.positive_integer.test(input);
 
 const isInRange = (input, min, max) => input >= min && input <= max;
 

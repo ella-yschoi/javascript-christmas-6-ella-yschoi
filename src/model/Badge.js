@@ -1,4 +1,4 @@
-import { OUTPUT, BADGES } from '../common/constants.js';
+import { BADGES, OUTPUT } from '../common/constants.js';
 
 class Badge {
 

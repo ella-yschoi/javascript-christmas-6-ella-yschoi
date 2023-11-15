@@ -1,4 +1,5 @@
-import { MENU, ERROR, UTILS } from '../common/constants.js';
+import { ERROR, MENU, EVENT } from '../common/constants.js';
+
 import { throwError } from '../common/utils.js';
 
 class Menu {
@@ -52,7 +53,7 @@ class Menu {
   }
 
   #validateMenuCount(count) {
-    if(!Number.isInteger(count) || count <= UTILS.zero) {
+    if(!Number.isInteger(count) || count <= EVENT.zero) {
       throwError(ERROR.order);
     }
     return count;

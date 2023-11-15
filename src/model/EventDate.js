@@ -1,6 +1,7 @@
-import { EVENT, ERROR } from '../common/constants.js';
+import { ERROR, EVENT } from '../common/constants.js';
+import { isInRange, isNumeric } from '../common/validator.js';
+
 import { throwError } from '../common/utils.js';
-import { isNumeric, isInRange } from '../common/validator.js';
 
 class EventDate {
 
@@ -8,7 +9,7 @@ class EventDate {
 
   constructor(date) {
     this.#validate(date);
-    this.#date = Number(date);
+    this.#date = Number(date); 
   }
 
   getEventDate() {
