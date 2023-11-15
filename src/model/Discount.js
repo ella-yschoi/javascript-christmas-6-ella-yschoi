@@ -2,26 +2,21 @@ import { EVENT, SPECIAL_DISCOUNT, TYPE, WEEKDAY, WEEKEND } from '../common/const
 
 class Discount {
 
-  #totalDiscount;
-
-  #specialDiscount;
-
-  #weekendDiscount;
-
-  #weekdayDiscount;
-
-  #christmasDdayDiscount;
-
   #date;
 
   #orderDetails;
+  
+  #discounts;
 
-  constructor(amount, date, orderDetails) {
-    this.#totalDiscount = 0;
+  constructor(date, orderDetails) {
     this.#date = date; 
     this.#orderDetails = orderDetails;
-    this.#weekendDiscount = 0;
-    this.#weekdayDiscount = 0;
+    this.#discounts = {
+      special: 0,
+      weekend: 0,
+      weekday: 0,
+      christmas: 0,
+    };
   }
 
   calculateTotalDiscount() {
@@ -32,61 +27,41 @@ class Discount {
   }
 
   getTotalDiscount() {
-    return this.#totalDiscount;
+    return Object.values(this.#discounts).reduce((sum, value) => sum + value, 0);
   }
 
-  getSpecialDiscount() {
-    return this.#specialDiscount;
+  getDiscount(type) {
+    return this.#discounts[type];
   }
 
-  getWeekendDiscount() {
-    return this.#weekendDiscount;
-  }
-  
-  getWeekdayDiscount() {
-    return this.#weekdayDiscount;
-  }
-
-  getChristmasDdayDiscount() {
-    return this.#christmasDdayDiscount;
-  }
-  
-  // 주말에는 메인 메뉴 1개당 2,023원 할인
   #applyWeekendDiscount() {
     if (WEEKEND.includes(this.#date.getEventDate())) {
       const mainMenus = this.#orderDetails.filter(menu => menu.getType() === TYPE.main);
       for (const menu of mainMenus) {
-        this.#weekendDiscount += menu.getCount() * EVENT.weekend_discount;
+        this.#discounts.weekend += menu.getCount() * EVENT.weekend_discount;
       }
-      this.#totalDiscount += this.#weekendDiscount;
     }
   }  
 
-  // 평일에는 디저트 메뉴 1개당 2,023원 할인
   #applyWeekdayDiscount() {
     if (WEEKDAY.includes(this.#date.getEventDate())) {
       const dessertMenus = this.#orderDetails.filter(menu => menu.getType() === TYPE.dessert);
       for (const menu of dessertMenus) {
-        this.#weekdayDiscount += menu.getCount() * EVENT.weekday_discount;
+        this.#discounts.weekday += menu.getCount() * EVENT.weekday_discount;
       }
-      this.#totalDiscount += this.#weekdayDiscount;
     }
   }
 
-  // 특별 할인: 달력에 별이 있는 날에는 총주문 금액에서 1,000원 특별 할인
   #applySpecialDiscount() {
     if (SPECIAL_DISCOUNT.includes(this.#date.getEventDate())) {
-      this.#specialDiscount = EVENT.start_discount;
-      this.#totalDiscount += this.#specialDiscount;
+      this.#discounts.special = EVENT.start_discount;
     }
   }
 
-  // 크리스마스 디데이 할인
   #applyChristmasDdayDiscount() {
     const dayOfMonth = this.#date.getEventDate();
     if (dayOfMonth >= 1 && dayOfMonth <= 25) {
-      this.#christmasDdayDiscount = EVENT.start_discount + EVENT.increase_discount * (dayOfMonth - 1);
-      this.#totalDiscount += this.#christmasDdayDiscount;
+      this.#discounts.christmas = EVENT.start_discount + EVENT.increase_discount * (dayOfMonth - 1);
     }
   }
 };
