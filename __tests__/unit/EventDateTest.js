@@ -16,4 +16,3 @@ describe('EventDate 테스트', () => {
     expect(() => new EventDate(invalidDate)).toThrow(ERROR.date);
   });
 });
-

@@ -2,6 +2,7 @@ import EventProcessor from '../../src/service/EventProcessor.js';
 import Menu from '../../src/model/Menu.js';
 import EventDate from '../../src/model/EventDate.js';
 
+
 describe('EventProcessor 기본 테스트', () => {
   let eventProcessor;
   let orderDetails;

@@ -5,16 +5,16 @@ class OutputView {
   
   static printPreview(date) {
     printMessage(OUTPUT.preview.replace('$date', date));
-  };
+  }
 
   static printOrder(menuList) {
     const formattedMenuList = menuList.map(menu => `${menu.getName()} ${menu.getCount()}${EVENT.count}`).join('\n');
     printMessage(OUTPUT.order_menu.replace('$menuList', formattedMenuList));
-  };  
+  }
 
   static printTotalOrderBeforeDiscount(totalAmount) {
     printMessage(OUTPUT.total_order_before_discount.replace('$totalAmount', totalAmount.toLocaleString()));
-  };
+  }
 
   static printBonusMenu(bonusMenu) {
     printMessage(OUTPUT.bonus_Menu.replace('$bonusMenu', bonusMenu || OUTPUT.none));
@@ -22,7 +22,7 @@ class OutputView {
 
   static printBenefitDetails(benefitDetails) {
     printMessage(OUTPUT.benefit_details.replace('$benefitDetails', benefitDetails));
-  }; 
+  }
 
   static printTotalBenefit(totalBenefit) {
     const formattedBenefit = totalBenefit === 0 
@@ -34,14 +34,14 @@ class OutputView {
 
   static printTotalPayAfterDiscount(finalAmount) {
     printMessage(OUTPUT.total_pay_after_discount.replace('$finalAmount', finalAmount.toLocaleString()));
-  };
+  }
 
   static printEventSummary(eventBadge, isEligibleForBenefit) {
     let outputMessage = OUTPUT.event_summary;
     outputMessage = outputMessage.replace('$eventBadge', eventBadge);
     outputMessage = outputMessage.replace('$eligibleForBenefit', isEligibleForBenefit ? "" : OUTPUT.total_over );
     printMessage(outputMessage);
-  };
+  }
 };
 
 export default OutputView;

@@ -21,4 +21,3 @@ describe('Order 클래스', () => {
     expect(order.getMenus().length).toBe(2);
   });
 });
-

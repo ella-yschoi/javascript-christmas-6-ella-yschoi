@@ -2,7 +2,6 @@ import Badge from '../../src/model/Badge.js';
 import { BADGES, OUTPUT } from '../../src/common/constants.js';
 
 describe('Badge 테스트', () => {
-
   test.each(BADGES)('총혜택 금액 최소 %d원 이상이면 %s 배지 부여', ({ badge, amount }) => {
     const badgeInstance = new Badge(amount);
     expect(badgeInstance.assignBadge()).toBe(badge);

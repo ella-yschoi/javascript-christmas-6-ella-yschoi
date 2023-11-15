@@ -25,4 +25,3 @@ describe('Menu 테스트', () => {
     expect(menu.getCount()).toBe(1);
   });
 });
-
