@@ -7,15 +7,27 @@ import OutputView from '../view/OutputView.js';
 
 class EventPlanner {
   
+  /**
+   * 이벤트 처리 및 계산된 결과 출력
+   * @returns {Promise<void>} - 처리 결과를 출력하는 Promise
+   */
   async manageEvent() {
-    const eventProcessor = await this.#initEventProcessor();
+    const eventProcessor = await this.#initEventProcessor(); // 사용자 input 받고 준비
   
     if (eventProcessor) {
+      // EventPlanner가 직접 계산하지 않고, 계산 (비즈니스 로직)은 service layer의 EventProcessor에 위임
+      // 그 결과 값만 사용
       const eventProcessingResult = eventProcessor.process(); 
+
+      // 계산된 결과 출력
       this.#printResult(eventProcessingResult); 
     } 
   }
 
+  /**
+   * EventProcessor 인스턴스 초기화
+   * @returns {Promise<EventProcessor|null>} - 초기화된 EventProcessor 인스턴스 또는 null
+   */
   async #initEventProcessor() {
     const eventDate = await this.#getEventDate();
     const orderDetails = await this.#getOrderDetails();
@@ -27,6 +39,10 @@ class EventPlanner {
     return new EventProcessor(eventDate, orderDetails);
   }
 
+  /**
+   * 사용자 입력으로부터 이벤트 날짜 받기
+   * @returns {Promise<EventDate|null>} - 받아온 날짜를 기반으로 생성한 EventDate 인스턴스 또는 null
+   */
   async #getEventDate() {
     try {
       return new EventDate(await InputView.getEventDate());
@@ -36,6 +52,10 @@ class EventPlanner {
     }
   }
 
+  /**
+   * 사용자 입력으로부터 주문 상세 정보를 받기
+   * @returns {Promise<Array<Order>>} - 주문 상세 정보 배열
+   */
   async #getOrderDetails() {
     try {
       const rawOrderDetails = await InputView.getOrderDetails();
@@ -47,6 +67,10 @@ class EventPlanner {
     }
   }
 
+  /**
+   * 계산된 이벤트 결과 출력
+   * @param {Object} result - 처리된 이벤트 데이터
+   */
   #printResult(result) {
     OutputView.printPreview(result.eventDate);
     OutputView.printOrder(result.orderDetails);

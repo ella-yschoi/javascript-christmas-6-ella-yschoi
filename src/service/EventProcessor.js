@@ -14,6 +14,10 @@ class EventProcessor {
     this.#orderDetails = orderDetails;
   }
 
+  /**
+   * 주문 정보를 기반으로 한 이벤트 적용된 가격 및 보너스 계산
+   * @returns {Object} - 처리된 이벤트 데이터
+   */
   process() {
     this.#calculateTotalAmountBeforeDiscount();
     this.#calculateDiscount();
@@ -33,6 +37,12 @@ class EventProcessor {
     };
   }
   
+  /**
+   * 총 할인되지 않은 금액과 혜택 대상 여부를 기반으로 한 가격 계산
+   * @param {number} totalAmountBeforeDiscount - 할인되지 않은 총 금액
+   * @param {boolean} isEligibleForBenefit - 혜택 대상 자격 여부
+   * @returns {Object} - 가격 정보
+   */
   #calculatePricing(totalAmountBeforeDiscount, isEligibleForBenefit) {
     const pricing = {
       totalAmountBeforeDiscount,
@@ -48,6 +58,11 @@ class EventProcessor {
     return pricing;
   }
   
+  /**
+   * 혜택 대상 여부를 기반으로 한 보너스 계산
+   * @param {boolean} isEligibleForBenefit - 혜택 대상 자격 여부
+   * @returns {Object} - 보너스 정보
+   */
   #calculateBonuses(isEligibleForBenefit) {
     const bonuses = {
       eventBadge: OUTPUT.none,
