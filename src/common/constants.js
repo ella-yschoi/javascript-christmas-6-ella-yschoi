@@ -10,6 +10,7 @@ const EVENT = Object.freeze({
   weekday_discount: 2_023,
   bonus_amount: 120_000,
   bonus_price: 25_000,
+  standard: 10_000,
   count: '개',
   won: '원',
   zero: 0,
@@ -71,6 +72,7 @@ const OUTPUT = Object.freeze({
   total_pay_after_discount: `\n<할인 후 예상 결제 금액>\n$finalAmount원`,
   event_badge: `\n<12월 이벤트 배지>\n$eventBadge`,
   none: '없음',
+  total_over: '총주문 금액 10,000원 이상부터 이벤트가 적용됩니다.',
 });
 
 const ERROR = Object.freeze({
@@ -80,7 +82,6 @@ const ERROR = Object.freeze({
   order: '유효하지 않은 주문입니다. ',
   order_over: '메뉴는 한 번에 최대 20개까지만 주문할 수 있습니다. ',
   only_beverage: '음료만 주문 시, 주문할 수 없습니다. ',
-  total_over: '총주문 금액 10,000원 이상부터 이벤트가 적용됩니다.',
 });
 
 const TYPE = Object.freeze({

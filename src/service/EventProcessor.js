@@ -1,4 +1,5 @@
 import { DISCOUNT, EVENT, OUTPUT, SPECIAL_CHARACTERS, TYPE } from '../common/constants.js';
+
 import Badge from '../model/Badge.js';
 import Discount from '../model/Discount.js';
 
@@ -17,22 +18,53 @@ class EventProcessor {
   process() {
     this.#calculateTotalAmountBeforeDiscount();
     this.#calculateDiscount();
-
+  
     const orderDetails = this.#orderDetails;
     const totalAmountBeforeDiscount = this.#totalAmountBeforeDiscount;
-    const totalBenefit = this.#calculateTotalBenefit();
-    const finalPayAmount = this.#calculateTotalPayAfterDiscount();
-    const eventBadge = this.#generateEventBadge();
-    const bonusMenu = this.#generateBonusMenu();
-    const benefitDetails = this.#generateBenefitDetails();
-
+    const isEligibleForBenefit = totalAmountBeforeDiscount >= EVENT.standard;
+    const pricing = this.#calculatePricing(totalAmountBeforeDiscount, isEligibleForBenefit);
+    const bonuses = this.#calculateBonuses(isEligibleForBenefit);
+  
     return {
       eventDate: this.#eventDate.getEventDate(),
       orderDetails,
-      pricing: { totalAmountBeforeDiscount, totalBenefit, finalPayAmount, },
-      bonuses: { eventBadge, bonusMenu, benefitDetails, },
+      isEligibleForBenefit: isEligibleForBenefit,
+      pricing,
+      bonuses,
     };
   }
+  
+  #calculatePricing(totalAmountBeforeDiscount, isEligibleForBenefit) {
+    const pricing = {
+      totalAmountBeforeDiscount,
+      totalBenefit: EVENT.zero,
+      finalPayAmount: totalAmountBeforeDiscount,
+    };
+  
+    if (isEligibleForBenefit) {
+      pricing.totalBenefit = this.#calculateTotalBenefit();
+      pricing.finalPayAmount = this.#calculateTotalPayAfterDiscount();
+    }
+  
+    return pricing;
+  }
+  
+  #calculateBonuses(isEligibleForBenefit) {
+    const bonuses = {
+      eventBadge: OUTPUT.none,
+      bonusMenu: OUTPUT.none,
+      benefitDetails: OUTPUT.none,
+    };
+  
+    if (isEligibleForBenefit) {
+      bonuses.eventBadge = this.#generateEventBadge();
+      bonuses.bonusMenu = this.#generateBonusMenu();
+      bonuses.benefitDetails = this.#generateBenefitDetails();
+    }
+
+    return bonuses;
+  }
+  
 
   #calculateTotalAmountBeforeDiscount() {
     this.#totalAmountBeforeDiscount = this.#orderDetails.reduce((total, menu) => {
