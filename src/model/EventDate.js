@@ -1,6 +1,5 @@
 import { ERROR, EVENT } from '../common/constants.js';
 import { isInRange, isNumeric } from '../common/validator.js';
-
 import { throwError } from '../common/utils.js';
 
 class EventDate {

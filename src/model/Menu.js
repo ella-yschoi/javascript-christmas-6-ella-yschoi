@@ -1,5 +1,4 @@
-import { ERROR, MENU, EVENT } from '../common/constants.js';
-
+import { ERROR, EVENT, MENU } from '../common/constants.js';
 import { throwError } from '../common/utils.js';
 
 class Menu {
@@ -15,10 +14,10 @@ class Menu {
   constructor(name, count) {
     this.#validate(name, count);
 
-    const menuInfo = MENU.find(item => item.name === name);
-
     this.#name = name;
     this.#count = count;
+    
+    const menuInfo = MENU.find(item => item.name === name);
     this.#price = menuInfo ? menuInfo.price : 0;
     this.#type = menuInfo ? menuInfo.type : null;
   }

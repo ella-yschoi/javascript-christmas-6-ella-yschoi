@@ -1,5 +1,4 @@
 import { DISCOUNT, EVENT, OUTPUT, SPECIAL_CHARACTERS, TYPE } from '../common/constants.js';
-
 import Badge from '../model/Badge.js';
 import Discount from '../model/Discount.js';
 

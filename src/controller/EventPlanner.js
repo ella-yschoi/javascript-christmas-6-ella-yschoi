@@ -1,7 +1,5 @@
-import { SPECIAL_CHARACTERS } from '../common/constants.js';
 import { printMessage } from '../common/utils.js';
 import EventDate from '../model/EventDate.js';
-import Menu from '../model/Menu.js';
 import Order from '../model/Order.js';
 import EventProcessor from '../service/EventProcessor.js';
 import InputView from '../view/InputView.js';
@@ -49,13 +47,6 @@ class EventPlanner {
     }
   }
 
-  #processOrderDetails(rawOrderDetails) {
-    return rawOrderDetails.split(SPECIAL_CHARACTERS.comma).map((item) => {
-      const [name, count] = item.split(SPECIAL_CHARACTERS.hyphen).map((str) => str.trim());
-      return new Menu(name, Number(count));
-    });
-  }
-
   #printResult(result) {
     OutputView.printPreview(result.eventDate);
     OutputView.printOrder(result.orderDetails);
@@ -64,7 +55,7 @@ class EventPlanner {
     OutputView.printBenefitDetails(result.bonuses.benefitDetails);
     OutputView.printTotalBenefit(result.pricing.totalBenefit);
     OutputView.printTotalPayAfterDiscount(result.pricing.finalPayAmount);
-    OutputView.printEventBadge(result.bonuses.eventBadge);
+    OutputView.printEventSummary(result.bonuses.eventBadge, result.isEligibleForBenefit);
   }
 }
 

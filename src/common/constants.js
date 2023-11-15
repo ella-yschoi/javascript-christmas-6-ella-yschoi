@@ -70,9 +70,9 @@ const OUTPUT = Object.freeze({
   benefit_details: `\n<혜택 내역>\n$benefitDetails`,
   total_benefit: `\n<총혜택 금액>\n$totalBenefit원`,
   total_pay_after_discount: `\n<할인 후 예상 결제 금액>\n$finalAmount원`,
-  event_badge: `\n<12월 이벤트 배지>\n$eventBadge`,
+  event_summary: `\n<12월 이벤트 배지>\n$eventBadge$eligibleForBenefit`,
   none: '없음',
-  total_over: '총주문 금액 10,000원 이상부터 이벤트가 적용됩니다.',
+  total_over: '\n\n총주문 금액 10,000원 이상부터 이벤트가 적용됩니다.',
 });
 
 const ERROR = Object.freeze({
@@ -111,4 +111,3 @@ const MENU = Object.freeze([
 ]);
 
 export { BADGES, DISCOUNT, ERROR, EVENT, INPUT, MENU, OUTPUT, REGEX, SPECIAL_CHARACTERS, SPECIAL_DISCOUNT, TYPE, WEEKDAY, WEEKEND };
-

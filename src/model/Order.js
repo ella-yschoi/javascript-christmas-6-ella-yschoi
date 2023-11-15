@@ -1,5 +1,4 @@
 import { ERROR, EVENT, REGEX, TYPE } from '../common/constants.js';
-
 import { SPECIAL_CHARACTERS } from '../common/constants.js';
 import { throwError } from '../common/utils.js';
 import Menu from './Menu.js';
@@ -18,9 +17,8 @@ class Order {
     return this.#menus;
   }
 
-  #validateOrderDetails(orderDetailsString) {
-    const orders = orderDetailsString.split(SPECIAL_CHARACTERS.comma);
-
+  #validateOrderDetails(orderDetails) {
+    const orders = orderDetails.split(SPECIAL_CHARACTERS.comma);
     const isInvalidOrder = orders.some(order => {
       return !order.match(REGEX.menu_item_format);
     });
@@ -29,17 +27,9 @@ class Order {
       throwError(ERROR.order);
     }
   }
-  
-  #isValidMenuName(menuName) {
-    return menuName.match(REGEX.non_spaced_string);
-  }
-  
-  #isValidMenuCount(menuCount) {
-    return menuCount !== '' && !Number.isNaN(Number(menuCount));
-  }
 
-  #createMenusFromOrderString(orderDetailsString) {
-    return orderDetailsString.split(SPECIAL_CHARACTERS.comma).map(item => {
+  #createMenusFromOrderString(orderDetails) {
+    return orderDetails.split(SPECIAL_CHARACTERS.comma).map(item => {
       const [name, count] = item.split(SPECIAL_CHARACTERS.hyphen).map(str => str.trim());
       return new Menu(name, Number(count));
     });
