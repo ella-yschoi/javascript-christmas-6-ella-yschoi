@@ -2,7 +2,7 @@ import EventProcessor from '../../src/service/EventProcessor.js';
 import Menu from '../../src/model/Menu.js';
 import EventDate from '../../src/model/EventDate.js';
 
-describe('EventProcessor 테스트', () => {
+describe('EventProcessor 기본 테스트', () => {
   let eventProcessor;
   let orderDetails;
   let eventDate;
@@ -44,5 +44,33 @@ describe('EventProcessor 테스트', () => {
   test('12월 이벤트 배지 생성', () => {
     const result = eventProcessor.process();
     expect(result.bonuses.eventBadge).toBeDefined();
+  });
+});
+
+describe('EventProcessor 상세 테스트', () => {
+  let eventProcessor;
+  let orderDetails;
+  let eventDate;
+
+  beforeEach(() => {
+    eventDate = new EventDate(3);
+    orderDetails = [
+      new Menu('티본스테이크', 1),
+      new Menu('바비큐립', 1),
+      new Menu('초코케이크', 2),
+      new Menu('제로콜라', 1)
+    ];
+    eventProcessor = new EventProcessor(eventDate, orderDetails);
+  });
+
+  test('이벤트 플래너 항목 출력', () => {
+    const result = eventProcessor.process();
+    
+    expect(result.pricing.totalAmountBeforeDiscount).toBe(142000);
+    expect(result.bonuses.bonusMenu).toBe('샴페인 1개');
+    expect(result.bonuses.benefitDetails).toContain('크리스마스 디데이 할인: -1,200원');
+    expect(result.pricing.totalBenefit).toBe(31246);
+    expect(result.pricing.finalPayAmount).toBe(135754);
+    expect(result.bonuses.eventBadge).toBe('산타');
   });
 });
