@@ -36,8 +36,11 @@ class OutputView {
     printMessage(OUTPUT.total_pay_after_discount.replace('$finalAmount', finalAmount.toLocaleString()));
   };
 
-  static printEventBadge(eventBadge) {
-    printMessage(OUTPUT.event_badge.replace('$eventBadge', eventBadge));
+  static printEventSummary(eventBadge, isEligibleForBenefit) {
+    let outputMessage = OUTPUT.event_summary;
+    outputMessage = outputMessage.replace('$eventBadge', eventBadge);
+    outputMessage = outputMessage.replace('$eligibleForBenefit', isEligibleForBenefit ? "" : OUTPUT.total_over );
+    printMessage(outputMessage);
   };
 };
 
